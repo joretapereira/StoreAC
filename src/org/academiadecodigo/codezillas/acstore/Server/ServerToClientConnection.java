@@ -13,10 +13,10 @@ public class ServerToClientConnection implements Runnable {
     private String clientRequest;
     private String clientName;
 
-    public ServerToClientConnection(Socket socket, Server server, String clientName) {
+    public ServerToClientConnection(Socket socket, Server server, String clientRequest) {
         this.socket = socket;
         this.server = server;
-        this.clientName = clientName;
+        this.clientName = clientRequest;
     }
 
     @Override
