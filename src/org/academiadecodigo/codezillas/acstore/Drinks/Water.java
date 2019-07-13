@@ -1,10 +1,6 @@
 package org.academiadecodigo.codezillas.acstore.Drinks;
 
 public class Water implements Drinkable {
-    private int price;
-
-    public Water(int price){
-        this.price = price;
-    }
+    public static final double WATER_PRICE = 0.30;
 
 }
