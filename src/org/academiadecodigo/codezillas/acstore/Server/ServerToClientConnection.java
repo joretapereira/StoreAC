@@ -10,6 +10,7 @@ public class ServerToClientConnection implements Runnable {
 
     private Socket socket;
     private Server server;
+    private String clientRequest;
     private String clientName;
 
     public ServerToClientConnection(Socket socket, Server server, String clientName) {
@@ -21,7 +22,9 @@ public class ServerToClientConnection implements Runnable {
     @Override
     public void run() {
 
+
         try{
+
             BufferedReader input =
                     new BufferedReader(
                             new InputStreamReader(
@@ -29,10 +32,17 @@ public class ServerToClientConnection implements Runnable {
 
             PrintWriter output =
                      new PrintWriter(
-                             socket.getOutputStream(), true);
+                             socket.getOutputStream(), true)
+                    ;
+            sendMsgToClient(output," !!! \n \n \n Welcome to AC amaaazing Store, Cadet_" + clientName + "!!!\n");
+
+            sendMsgToClient(output,"Please make your request\n");
+
 
             while (!socket.isClosed()) {
                 waitingForClientRequest(input);
+                sendMsgToClient(output, clientRequest);
+
             }
         }catch (IOException ioe){
             System.out.println(ioe.getMessage());
@@ -40,8 +50,13 @@ public class ServerToClientConnection implements Runnable {
     }
 
     private void waitingForClientRequest(BufferedReader input) throws IOException {
-        System.out.println("waiting your (client)request \n");
-        String clientRequest = input.readLine();
-        System.out.println("client request  is  :" +clientRequest);
+        //System.out.println("waiting your (client)request \n");
+        clientRequest = input.readLine();
+        //System.out.println("client request  is  :" +clientRequest);
     }
+
+    public void sendMsgToClient(PrintWriter output, String message){
+        output.println(message + "\n");
+    }
+
 }

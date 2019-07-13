@@ -13,6 +13,7 @@ public class Server {
     private ExecutorService service;
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
+    private int clientName = 0;
 
     public Server( int port) throws IOException {
         serverSocket = new ServerSocket(port);
@@ -30,12 +31,12 @@ public class Server {
     }
 
     public void Start() {
-        int connections = 0;
+
 
         while (true) {
 
-            waitConnection(connections);
-            connections++;
+            waitConnection(clientName);
+            clientName++;
 
         }
 
@@ -46,9 +47,9 @@ public class Server {
             Socket clientSocket = serverSocket.accept();
 
             ServerToClientConnection connection =
-                    new ServerToClientConnection(clientSocket, this, "Cadet_" +connections);
+                    new ServerToClientConnection(clientSocket, this, "" + clientName);
             service.submit(connection);
-            System.out.println("Welcome to AC Amazing store!!!");
+            System.out.println("Welcome Client_ "+ clientName);
 
         }catch(IOException ioe){
             System.out.println(ioe.getMessage());
