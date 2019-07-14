@@ -13,7 +13,7 @@ public class Server {
     private ExecutorService service;
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
-    private int clientName = 0;
+    private static int clientName = 0;
 
     public Server( int port) throws IOException {
         serverSocket = new ServerSocket(port);
@@ -36,14 +36,14 @@ public class Server {
 
         while (true) {
 
-            waitConnection(clientName);
             clientName++;
+            waitConnection(clientName);
 
         }
 
     }
 
-    public void waitConnection(int connections){
+    public void  waitConnection(int connections){
         try {
             Socket clientSocket = serverSocket.accept();
 
@@ -57,7 +57,5 @@ public class Server {
         }
 
     }
-
-
 
 }// end of the Class

@@ -1,5 +1,7 @@
 package org.academiadecodigo.codezillas.acstore.Client;
 
+
+import org.academiadecodigo.codezillas.acstore.Server.Server;
 import org.academiadecodigo.codezillas.acstore.Drinks.Beer;
 import org.academiadecodigo.codezillas.acstore.Store.Store;
 
@@ -14,7 +16,7 @@ import java.util.concurrent.Executors;
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.bootcamp.scanners.integer.IntegerInputScanner;
 import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
-
+import org.academiadecodigo.codezillas.acstore.Store.Store;
 
 public class Client implements Runnable {
     private ExecutorService pool;
@@ -40,8 +42,7 @@ public class Client implements Runnable {
     public void start() {
 
         while (socket.isBound()) {
-
-
+            menu();
         }
 
         pool = Executors.newCachedThreadPool();
@@ -122,7 +123,7 @@ public class Client implements Runnable {
         switch (numOfOption) {
 
             case 1:
-                System.out.println("User wants to " + menuArr[0]);
+                System.out.println("customer wants " + menuArr[0]);
                 store.consumedBeer(howMany());
                 break;
 
