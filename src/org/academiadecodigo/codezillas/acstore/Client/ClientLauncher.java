@@ -1,7 +1,6 @@
 package org.academiadecodigo.codezillas.acstore.Client;
 
 public class ClientLauncher {
-    private static int clientNames = 0;
 
     public static void main(String[] args) {
 
@@ -11,8 +10,7 @@ public class ClientLauncher {
         }
 
         try {
-            clientNames++;
-            Client client = new Client(args[0], Integer.valueOf(args[1]), "" + clientNames);
+            Client client = new Client(args[0], Integer.valueOf(args[1]));
             client.start();
 
 
@@ -22,11 +20,6 @@ public class ClientLauncher {
         }
     }
 
-    public void start() {
-        while (true) {
-            clientNames++;
-        }
-    }
 
 
 }
