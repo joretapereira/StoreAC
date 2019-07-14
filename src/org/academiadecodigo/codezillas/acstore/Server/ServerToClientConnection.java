@@ -1,9 +1,9 @@
 package org.academiadecodigo.codezillas.acstore.Server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import org.academiadecodigo.bootcamp.Prompt;
+import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
+
+import java.io.*;
 import java.net.Socket;
 
 public class ServerToClientConnection implements Runnable {
@@ -24,7 +24,12 @@ public class ServerToClientConnection implements Runnable {
 
 
         try{
+            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+            Prompt prompt = new Prompt(socket.getInputStream(), new PrintStream(socket.getOutputStream(), true));
+            StringInputScanner stringInputScanner = new StringInputScanner();
+            stringInputScanner.setMessage("Enter your username: ");
 
+            clientName = prompt.getUserInput(stringInputScanner);
             BufferedReader input =
                     new BufferedReader(
                             new InputStreamReader(
@@ -42,7 +47,7 @@ public class ServerToClientConnection implements Runnable {
 
             while (!socket.isClosed()) {
                 waitingForClientRequest(input);
-                sendMsgToClient(output, clientRequest);
+               // sendMsgToClient(output, clientRequest);
 
             }
         }catch (IOException ioe){
@@ -53,7 +58,7 @@ public class ServerToClientConnection implements Runnable {
     private void waitingForClientRequest(BufferedReader input) throws IOException {
         //System.out.println("waiting your (client)request \n");
         clientRequest = input.readLine();
-        System.out.println(clientRequest);
+        //System.out.println((clientRequest));
         //System.out.println("client request  is  :" +clientRequest);
     }
 
