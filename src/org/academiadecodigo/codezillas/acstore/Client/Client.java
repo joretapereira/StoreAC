@@ -2,13 +2,14 @@ package org.academiadecodigo.codezillas.acstore.Client;
 
 
 import org.academiadecodigo.codezillas.acstore.Store.Store;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 import org.academiadecodigo.bootcamp.Prompt;
-import org.academiadecodigo.bootcamp.scanners.integer.IntegerInputScanner;
-import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
+
 
 
 public class Client implements Runnable {
@@ -16,30 +17,17 @@ public class Client implements Runnable {
     private Socket socket;
     private Prompt prompt;
     private Store store;
-
-
-    public static final String EXIT = "/quit";
+    private int numOfOption;
 
     public Client(String host, int port) {
         store = new Store();
+
 
         try {
             socket = new Socket(host, port);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void start() {
-
-        while (socket.isBound()) {
-            menu();
-        }
-
-        pool = Executors.newCachedThreadPool();
-
-        pool.submit(this);
-
     }
 
     public void waitMessage(BufferedReader reader) throws IOException {
@@ -95,23 +83,22 @@ public class Client implements Runnable {
     }
 
 
-    public void menu() {
+    /*public void menu() {
+
 
         try {
             prompt = new Prompt(socket.getInputStream(), new PrintStream(socket.getOutputStream()));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         String[] menuArr = {"Beer", "Coffee", "Water"};
 
         MenuInputScanner menuOptions = new MenuInputScanner(menuArr);
 
         menuOptions.setMessage("What would you like to have?");
 
-        // Integer beerNumber = prompt.getUserInput(anyInteger);
-
-        int numOfOption = prompt.getUserInput(menuOptions);
+        numOfOption = prompt.getUserInput(menuOptions);
 
 
         switch (numOfOption) {
@@ -142,6 +129,6 @@ public class Client implements Runnable {
         int answer = prompt.getUserInput(howManyDrinks);
 
         return answer;
-    }
+    }*/
 
 }

@@ -1,5 +1,7 @@
 package org.academiadecodigo.codezillas.acstore.Server;
 
+import org.academiadecodigo.codezillas.acstore.Store.Store;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +17,7 @@ public class Server {
     private PrintWriter printWriter;
     private static int clientName = 0;
 
-    public Server( int port) throws IOException {
+    public Server(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         service = Executors.newCachedThreadPool();
     }
@@ -23,9 +25,13 @@ public class Server {
     public static void main(String[] args) {
         try {
             Server server = new Server(8080);
+            Store store = new Store();
 
             server.Start();
-        } catch (IOException ioe){
+            store.stockLevel();
+
+
+        } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         }
 
@@ -43,7 +49,10 @@ public class Server {
 
     }
 
-    public void  waitConnection(int connections){
+    public void waitConnection(int connections) {
+
+
+
         try {
             Socket clientSocket = serverSocket.accept();
 
@@ -52,10 +61,11 @@ public class Server {
             service.submit(connection);
             System.out.println("Welcome Client_ " + clientName);
 
-        }catch(IOException ioe){
+        } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         }
 
     }
+
 
 }// end of the Class
