@@ -12,9 +12,11 @@ import java.util.concurrent.Executors;
 public class Client implements Runnable {
     ExecutorService pool;
     Socket socket;
-    public static final String EXIT = "/quit";
+    private String clientName;
+    private static final String EXIT = "/quit";
 
-    public Client(String host, int port) {
+    public Client(String host, int port, String clientName) {
+        this.clientName = clientName;
         try {
             socket = new Socket(host, port);
         } catch (IOException e) {
@@ -48,6 +50,10 @@ public class Client implements Runnable {
         try {
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
             Scanner scanner = new Scanner(System.in);
+            sendMsgToClient(writer," !!! \n \n \n Welcome to AC amaaazing Store, Cadet_" + clientName + "!!!\n");
+
+
+            sendMsgToClient(writer,"Please make your request\n");
 
             while (!socket.isClosed()) {
                 String input = scanner.nextLine();
@@ -72,6 +78,11 @@ public class Client implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendMsgToClient(PrintWriter output, String message){
+        System.out.println(message + "\n");
+        output.println(message + "\n");
     }
 
 
