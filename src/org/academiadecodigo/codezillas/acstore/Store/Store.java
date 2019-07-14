@@ -6,8 +6,6 @@ import org.academiadecodigo.codezillas.acstore.Drinks.Drinkable;
 import org.academiadecodigo.codezillas.acstore.Drinks.Water;
 
 import java.security.PrivateKey;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Store implements Drinkable {
     private static final int MAX_ORDER = 10;
@@ -16,83 +14,75 @@ public class Store implements Drinkable {
     private int waterStock = 120;
     private int coffeeStock = 120;
 
-    public static void main(String[] args) {
+    public void consumedBeer(int askedNumber) {
 
-        Store store = new Store();
-        store.consumedBeer(3);
-        store.consumedBeer(4);
-        store.consumedWater(11);
-    }
-
-    public void consumedBeer(int askedNumber){
-
-        if(askedNumber > beerStock){
+        if (askedNumber > beerStock) {
 
             System.out.println("Sorry, we only have " + beerStock + " beers. \n");
             beerStock = beerStock + 120;
             return;
         }
 
-        if(askedNumber > MAX_ORDER){
+        if (askedNumber > MAX_ORDER) {
             System.out.println("You can only order maximum " + MAX_ORDER + " beers at a time.");
             return;
         }
 
         beerStock = beerStock - askedNumber;
-        System.out.println("Enjoy your " + askedNumber+ " beers.");
+        System.out.println("Enjoy your " + askedNumber + " beers.");
         return;
 
     }
 
-    public void consumedCoffee(int askedNumber){
+    public void consumedCoffee(int askedNumber) {
 
-        if(askedNumber > coffeeStock){
+        if (askedNumber > coffeeStock) {
 
             System.out.println("Sorry, we only have " + coffeeStock + " coffees. \n");
             coffeeStock = coffeeStock + 120;
             return;
 
         }
-        if(askedNumber > MAX_ORDER){
+        if (askedNumber > MAX_ORDER) {
             System.out.println("You can only order maximum " + MAX_ORDER + " coffees at a time.");
             return;
         }
 
         coffeeStock = coffeeStock - askedNumber;
-        System.out.println("Enjoy your " + askedNumber+ " coffee.");
-        return;
+        System.out.println("Enjoy your " + askedNumber + " coffee.");
+            return;
 
     }
 
-    public void consumedWater(int askedNumber){
+    public void consumedWater(int askedNumber) {
 
-        if(askedNumber > waterStock){
+        if (askedNumber > waterStock) {
 
             System.out.println("Sorry, our stock of water is only " + waterStock + ". \n");
             waterStock = waterStock + 120;
             return;
         }
-        if(askedNumber > MAX_ORDER){
+        if (askedNumber > MAX_ORDER) {
             System.out.println(" you can only order maximum " + MAX_ORDER + " waters at a time.");
             return;
         }
 
         waterStock = waterStock + askedNumber;
 
-        System.out.println("Enjoy your " + askedNumber+ " beer.");
+        System.out.println("Enjoy your " + askedNumber + " beer.");
         return;
 
     }
 
-    public void bearStockLevel(){
+    public void bearStockLevel() {
         System.out.println("Bear stock: " + beerStock + ".");
     }
 
-    public void waterStockLevel(){
+    public void waterStockLevel() {
         System.out.println("Water stock: " + waterStock + ".");
     }
 
-    public void coffeeStockLevel(){
+    public void coffeeStockLevel() {
         System.out.println("Coffee stock: " + coffeeStock + ".");
     }
 

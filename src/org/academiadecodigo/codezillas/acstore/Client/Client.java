@@ -1,6 +1,8 @@
 package org.academiadecodigo.codezillas.acstore.Client;
 
+
 import org.academiadecodigo.codezillas.acstore.Server.Server;
+import org.academiadecodigo.codezillas.acstore.Store.Store;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,15 +12,25 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import org.academiadecodigo.bootcamp.Prompt;
+import org.academiadecodigo.bootcamp.scanners.integer.IntegerInputScanner;
+import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
+import org.academiadecodigo.codezillas.acstore.Store.Store;
 
 public class Client implements Runnable {
-    ExecutorService pool;
-    Socket socket;
+    private ExecutorService pool;
+    private Socket socket;
+    private Prompt prompt;
+    private Store store;
     private String clientName;
-    private static final String EXIT = "/quit";
+
+
+    public static final String EXIT = "/quit";
 
     public Client(String host, int port, String clientName) {
         this.clientName = clientName;
+        store = new Store();
+
         try {
             socket = new Socket(host, port);
         } catch (IOException e) {
@@ -87,5 +99,46 @@ public class Client implements Runnable {
         output.println(message + "\n");
     }
 
+
+    public void menu() {
+
+        prompt = new Prompt(System.in, System.out);
+
+        String[] menuArr = {"Beer", "Coffee", "Water"};
+        MenuInputScanner menuOptions = new MenuInputScanner(menuArr);
+
+        // Integer beerNumber = prompt.getUserInput(anyInteger);
+
+        int numOfOption = prompt.getUserInput(menuOptions);
+
+        switch (numOfOption) {
+
+            case 1:
+                System.out.println("Here's your beer! Enjoy.");
+                store.consumedBeer(howMany());
+                break;
+
+            case 2:
+                System.out.println("Here's your coffee, enjoy!");
+                store.consumedCoffee(howMany());
+                break;
+
+            case 3:
+                System.out.println("Here's your healthy water, enjoy!");
+                store.consumedWater(howMany());
+                break;
+        }
+
+    }
+
+    public int howMany() {
+
+        IntegerInputScanner howManyDrinks = new IntegerInputScanner();
+        howManyDrinks.setMessage("How many would you like to take?");
+
+        int answer = prompt.getUserInput(howManyDrinks);
+
+        return answer;
+    }
 
 }
