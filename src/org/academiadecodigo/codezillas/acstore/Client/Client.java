@@ -1,5 +1,7 @@
 package org.academiadecodigo.codezillas.acstore.Client;
 
+import org.academiadecodigo.codezillas.acstore.Store.Store;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,12 +20,13 @@ public class Client implements Runnable {
     private Socket socket;
     private Prompt prompt;
     private Store store;
+    private String clientName;
 
 
     public static final String EXIT = "/quit";
 
-    public Client(String host, int port) {
-
+    public Client(String host, int port, String clientName) {
+        this.clientName = clientName;
         store = new Store();
 
         try {
@@ -59,6 +62,10 @@ public class Client implements Runnable {
         try {
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
             Scanner scanner = new Scanner(System.in);
+            sendMsgToClient(writer," !!! \n \n \n Welcome to AC amaaazing Store, Cadet_" + clientName + "!!!\n");
+
+
+            sendMsgToClient(writer,"Please make your request\n");
 
             while (!socket.isClosed()) {
                 String input = scanner.nextLine();
@@ -83,6 +90,11 @@ public class Client implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendMsgToClient(PrintWriter output, String message){
+        System.out.println(message + "\n");
+        output.println(message + "\n");
     }
 
 

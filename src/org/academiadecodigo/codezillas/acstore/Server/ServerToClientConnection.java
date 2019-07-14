@@ -16,7 +16,7 @@ public class ServerToClientConnection implements Runnable {
     public ServerToClientConnection(Socket socket, Server server, String clientRequest) {
         this.socket = socket;
         this.server = server;
-        this.clientName = clientRequest;
+        this.clientRequest = clientRequest ;
     }
 
     @Override
@@ -32,9 +32,10 @@ public class ServerToClientConnection implements Runnable {
 
             PrintWriter output =
                      new PrintWriter(
-                             socket.getOutputStream(), true)
-                    ;
+                             socket.getOutputStream(), true);
+
             sendMsgToClient(output," !!! \n \n \n Welcome to AC amaaazing Store, Cadet_" + clientName + "!!!\n");
+
 
             sendMsgToClient(output,"Please make your request\n");
 
@@ -52,6 +53,7 @@ public class ServerToClientConnection implements Runnable {
     private void waitingForClientRequest(BufferedReader input) throws IOException {
         //System.out.println("waiting your (client)request \n");
         clientRequest = input.readLine();
+        System.out.println(clientRequest);
         //System.out.println("client request  is  :" +clientRequest);
     }
 
