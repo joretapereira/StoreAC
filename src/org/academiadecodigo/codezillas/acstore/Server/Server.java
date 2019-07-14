@@ -50,7 +50,7 @@ public class Server {
             ServerToClientConnection connection =
                     new ServerToClientConnection(clientSocket, this, "" + clientName);
             service.submit(connection);
-            System.out.println("Welcome Client_ "+ clientName);
+            System.out.println("Welcome Client_ " + clientName);
 
         }catch(IOException ioe){
             System.out.println(ioe.getMessage());
